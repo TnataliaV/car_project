@@ -1,0 +1,89 @@
+@use '../../styles/globals' as *;
+
+.cover1 {
+  background-color: #141414;
+  height: 100px;
+}
+
+.model {
+  padding: 50px 0;
+  background-color: #141414;
+  color: white;
+
+  h2 {
+    font-family: 'Inter';
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: white;
+  }
+}
+
+.containerModel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 90px;
+}
+
+.carImage {
+  width: 60%;
+  max-width: 630px;
+  height: auto;
+}
+
+.modelDescription {
+  width: 35%;
+  color: white;
+  
+  p {
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    font-family: 'Inter';
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+
+  button {
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 15px 35px;
+    background: none;
+    border-radius: 1px;
+    font-size: 14px;
+    font-family: 'Inter';
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      color: #141414;
+      background: #ffffff;
+    }
+  }
+}
+
+.prices {
+  padding: 15px 35px;
+}
+
+.rent {
+  padding: 15px 50px;
+}
+
+// Стили для таблиц и формы
+.costRent {
+  margin: 60px 0;
+
+  h3 {
+    color: white;
+    font-family: 'Inter';
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+}

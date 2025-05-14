@@ -1,0 +1,68 @@
+@use '../../styles/globals' as *;
+
+.container {
+  width: 1140px;
+  margin: 0 auto;
+}
+
+.cover {
+  background-repeat: no-repeat;
+  width: 100%;
+  background-size: cover;
+  min-height: 100vh;
+  position: relative;
+
+  &Container {
+    height: 65vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+.coverDescription {
+  padding-bottom: 130px;
+  
+  h1 {
+    margin: 0;
+    color: #ffffff;
+    font-family: 'Zen Dots';
+    font-size: 96px;
+    font-weight: normal;
+  }
+
+  p {
+    color: #ffffff;
+    font-size: 36px;
+    margin-top: 30px;
+    font-weight: 300;
+    font-family: 'Inter';
+  }
+
+  button {
+    margin-top: 66px;
+  }
+}
+
+.aboutUs {
+  padding: 90px 0;
+  
+  p {
+    margin-top: 40px;
+    color: #ffffff;
+    font-size: 20px;
+    font-family: 'Inter';
+  }
+
+  ul {
+    margin-top: 20px;
+    padding-left: 20px;
+    
+    li {
+      color: #ffffff;
+      font-family: 'Inter';
+      font-size: 20px;
+      margin-top: 10px;
+    }
+  }
+}

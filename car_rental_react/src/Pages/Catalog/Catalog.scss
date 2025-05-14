@@ -1,0 +1,76 @@
+@use '../../styles/globals' as *;
+
+.cover1 {
+  background-color: #141414;
+  height: 100px;
+}
+
+.catalog {
+  padding: 50px 0;
+  background-color: #141414;
+  color: white;
+
+  h2 {
+    font-family: 'Inter';
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+}
+
+.categoriesImage {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 60px;
+
+  a {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Inter';
+    font-weight: 300;
+    font-size: 16px;
+    transition: font-weight 0.3s;
+
+    &:hover {
+      font-weight: 350;
+    }
+  }
+}
+
+.carCategory {
+  margin-bottom: 80px;
+
+  h3 {
+    color: #ffffff;
+    font-family: 'Inter';
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 30px;
+  }
+}
+
+.carImages {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  img {
+    width: 353px;
+    height: 178px;
+    object-fit: cover;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+}
