@@ -1,6 +1,6 @@
 CREATE DATABASE luxury_cars;
 
-CREATE TABLE car (
+CREATE TABLE cars (
     id SERIAL PRIMARY KEY,
     model VARCHAR(50) NOT NULL,
     image_url VARCHAR(255) NOT NULL,
