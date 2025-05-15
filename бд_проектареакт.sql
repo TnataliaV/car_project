@@ -12,7 +12,7 @@ CREATE TABLE cars (
 
 CREATE TABLE booking (
     id SERIAL PRIMARY KEY,
-    car_id INTEGER REFERENCES car(id),
+    car_id INTEGER REFERENCES cars(id),
     client_name VARCHAR(100) NOT NULL,
     client_phone VARCHAR(20) NOT NULL,
     start_date TIMESTAMP NOT NULL,
@@ -28,6 +28,6 @@ CREATE TABLE application (
     sending_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO car VALUES (1, 'Mercedes CLS 450 4matic', 'image-1.png', 3.0, 367, 'полный', 'от 12.000 ₽ до 19.000 ₽');
+INSERT INTO cars VALUES (1, 'Mercedes CLS 450 4matic', 'image-1.png', 3.0, 367, 'полный', 'от 12.000 ₽ до 19.000 ₽');
 
-SELECT * FROM car;
+SELECT * FROM cars;

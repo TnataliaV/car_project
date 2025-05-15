@@ -10,10 +10,10 @@ const Header = () => {
         
         <nav className="desktopLinks">
           <ul>
-            <li><a href="#about_Us">О нас</a></li>
-            <li><a href="#popular">Популярное</a></li>
-            <li><a href="#conditions">Условия</a></li>
-            <li><a href="#contacts">Контакты</a></li>
+            <li><a href="/#about_Us">О нас</a></li>
+            <li><a href="/#popular">Популярное</a></li>
+            <li><a href="/#conditions">Условия</a></li>
+            <li><a href="/#contacts">Контакты</a></li>
           </ul>
         </nav>
       </div>

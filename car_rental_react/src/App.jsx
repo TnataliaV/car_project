@@ -5,6 +5,13 @@ import Main from './Pages/Main/Main';
 import Catalog from './Pages/Catalog/Catalog';
 import Car from './Pages/Car/Car';
 
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = ''
+const supabaseKey = ''
+
+export const supabase = createClient(supabaseUrl, supabaseKey)
+
 function App() {
   return (
     <Router>

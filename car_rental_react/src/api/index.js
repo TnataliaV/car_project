@@ -12,7 +12,3 @@ export const createBooking = (bookingData) => api.post('/booking', bookingData);
 export const createApplication = (applicationData) => api.post('/applications', applicationData);
 
 export default api;
-
-
-// node server.js
-// Server running on port 5000
