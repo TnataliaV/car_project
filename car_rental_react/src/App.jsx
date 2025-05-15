@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import Main from './pages/Main/Main';
-import Catalog from './pages/Catalog/Catalog';
-import Car from './pages/Car/Car';
+import Main from './Pages/Main/Main';
+import Catalog from './Pages/Catalog/Catalog';
+import Car from './Pages/Car/Car';
 
 function App() {
   return (

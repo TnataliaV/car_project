@@ -13,7 +13,7 @@
   }
   
   .logo {
-    height: 50px;
+    height: 20px;
     width: auto;
   }
   
@@ -29,6 +29,7 @@
           color: white;
           font-size: 18px;
           transition: font-weight 0.3s;
+          transform: translateZ(0);
           
           &:hover {
             font-weight: bold;
@@ -36,54 +37,4 @@
         }
       }
     }
-  }
-  
-  .burgerMenu {
-    display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
-  .mobileLinks {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 80%;
-    height: 100vh;
-    background-color: var(--primary-bg);
-    transition: right 0.3s ease;
-    padding: 20px;
-    z-index: 1000;
-    
-    &.open {
-      right: 0;
-    }
-    
-    ul {
-      list-style: none;
-      margin-top: 50px;
-      
-      li {
-        margin-bottom: 20px;
-        
-        a {
-          color: white;
-          font-size: 20px;
-        }
-      }
-    }
-  }
-  
-  .closeMenu {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
   }

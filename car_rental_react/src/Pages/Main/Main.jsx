@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import './Main.scss';
 
 import { getCars } from '../../api';
 import axios from 'axios';
 
-import image1 from '../../assets/img/image-1.png';
-import image2 from '../../assets/img/image-2.png';
-import image3 from '../../assets/img/image-3.png';
-import image4 from '../../assets/img/image-4.png';
-import image5 from '../../assets/img/image-5.png';
-import image6 from '../../assets/img/image-6.png';
+// Импортируем все изображения заранее
+import heroBg from '../../assets/img/главная_машина.png';
+import car1 from '../../assets/img/image-1.png';
+import car2 from '../../assets/img/image-2.png';
+import car3 from '../../assets/img/image-3.png';
+import car4 from '../../assets/img/image-4.png';
+import car5 from '../../assets/img/image-5.png';
+import car6 from '../../assets/img/image-6.png';
+import licenseIcon from '../../assets/img/права.png';
+import experienceIcon from '../../assets/img/стаж.png';
+import docsIcon from '../../assets/img/документы.png';
+import questionBg from '../../assets/img/машина_б.png';
+import mapBg from '../../assets/img/карта.png';
+import socialIcons from '../../assets/img/соц.сети.png';
 
 const Main = () => {
   const [popularCars, setPopularCars] = useState([]);
@@ -26,14 +32,19 @@ const Main = () => {
   useEffect(() => {
     const fetchPopularCars = async () => {
       try {
-        // Попробуем получить данные о популярных автомобилях
         const response = await getCars();
-        console.log('Received popular cars:', response.data); // Логирование успешного ответа
         setPopularCars(response.data);
       } catch (error) {
-        // Если ошибка, выводим больше информации в консоль
-        console.error('Error fetching popular cars:', error.response ? error.response.data : error.message);
-        alert('Ошибка при получении популярных автомобилей');
+        console.error('Error fetching popular cars:', error);
+        // Заглушка для демонстрации
+        setPopularCars([
+          { id: 1, image: car1 },
+          { id: 2, image: car2 },
+          { id: 3, image: car3 },
+          { id: 4, image: car4 },
+          { id: 5, image: car5 },
+          { id: 6, image: car6 },
+        ]);
       }
     };
 
@@ -64,24 +75,33 @@ const Main = () => {
 
   return (
     <>
-      <Header />
-
-      <section id="cover" className="cover">
+      {/* Hero Section */}
+      <section id="cover" className="cover" style={{ backgroundImage: `url(${heroBg})` }}>
         <div className="container">
-          <div className="heroContent">
+          <div className="coverDescription">
             <h1>Luxury cars</h1>
-            <p>Аренда элитных автомобилей в Сочи</p>
-            <Link to="/catalog" className="ctaButton">
+            <p className="desktop-only">Аренда элитных автомобилей в Сочи</p>
+            <Link to="/catalog" className="cta-button">
               Каталог автомобилей
             </Link>
           </div>
         </div>
       </section>
 
+      {/* About Us Section */}
       <section id="about_Us" className="aboutUs">
         <div className="container">
           <h2>О НАС</h2>
-          <p>Собственный автопарк «Luxury cars» представлен коллекцией элитных автомобилей...</p>
+          <p>Собственный автопарк «Luxury cars» представлен коллекцией элитных автомобилей. Вы можете оформить
+            услугу<br />
+            проката авто люкс класса за считанные минуты и уже в течение часа оказаться за рулем одного из наших
+            красавцев.</p>
+          <p>Для тех, кто знает цену подлинному комфорту, компания «Luxury cars» предлагает услугу проката
+            эксклюзивных<br />
+            автомобилей в Сочи на самых привлекательных условиях!</p>
+          <p>Уже сегодня мы предоставим вам все возможности для быстрого оформления аренды автомобиля
+            премиум-класса.<br />
+            Вы сможете:</p>
           <ul>
             <li>Выбрать марку престижного автомобиля по вашему желанию</li>
             <li>Быстро оформить заявку и договор аренды автомобиля в Сочи</li>
@@ -90,81 +110,119 @@ const Main = () => {
         </div>
       </section>
 
+      {/* Popular Cars Section */}
       <section id="popular" className="popular">
         <div className="container">
           <h2>ПОПУЛЯРНЫЕ АВТОМОБИЛИ</h2>
           <div className="carGrid">
             {popularCars.length > 0 ? (
-              popularCars.map((car, index) => (
+              popularCars.map((car) => (
                 <Link key={car.id} to={`/car/${car.id}`} className="carItem">
                   <img
-                    src={require(`../../assets/img/image-${index + 1}.png`)}
-                    alt={car.model}
+                    src={car.image}
                     className="carImage"
                   />
-                  <h3>{car.model}</h3>
-                  <p>{car.price}</p>
                 </Link>
               ))
             ) : (
               <p>Загружаем автомобили...</p>
             )}
           </div>
-          <Link to="/catalog" className="viewAllButton">
-            Показать все автомобили
-          </Link>
+          <div className="viewAllButton">
+            <Link to="/catalog" className="cta-button">
+              Показать все автомобили
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section id="questions" className="questions">
+      {/* Conditions Section */}
+      <section id="conditions" className="conditions">
         <div className="container">
-          <h2>У ВАС ОСТАЛИСЬ ВОПРОСЫ?</h2>
-          <p>Оставьте заявку, мы свяжемся с вами и ответим на них</p>
-          <form onSubmit={handleApplicationSubmit}>
-            <div className="formRow">
-              <input
-                type="text"
-                name="name"
-                value={applicationForm.name}
-                onChange={handleApplicationChange}
-                placeholder="Ваше имя"
-                required
-                className="formInput"
-              />
-              <input
-                type="email"
-                name="email"
-                value={applicationForm.email}
-                onChange={handleApplicationChange}
-                placeholder="E-mail"
-                required
-                className="formInput"
-              />
-              <input
-                type="tel"
-                name="phone"
-                value={applicationForm.phone}
-                onChange={handleApplicationChange}
-                placeholder="Телефон"
-                className="formInput"
-              />
+          <h2>УСЛОВИЯ АРЕНДЫ</h2>
+          <div className="conditions-cards">
+            <div className="condition-card">
+              <div className="icon"><img src={licenseIcon} alt="Права" /></div>
+              <h4>Права</h4>
+              <p>Наличие прав категории В</p>
             </div>
-            <textarea
-              name="question"
-              value={applicationForm.question}
-              onChange={handleApplicationChange}
-              placeholder="Опишите проблему"
-              required
-              className="formTextarea"
-            ></textarea>
-            <button type="submit" className="submitButton">
-              Оставить заявку
-            </button>
+            <div className="condition-card central">
+              <div className="icon"><img src={experienceIcon} alt="Стаж" /></div>
+              <h4>Стаж работы</h4>
+              <p>Не менее 3 лет</p>
+            </div>
+            <div className="condition-card">
+              <div className="icon"><img src={docsIcon} alt="Документы" /></div>
+              <h4>Документы</h4>
+              <p>Паспорт РФ и водительское<br />удостоверение</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Questions Section */}
+      <section id="questions" className="questions" style={{ backgroundImage: `url(${questionBg})` }}>
+        <div className="container">
+          <div className="questions-desc">
+            <h2>У ВАС ОСТАЛИСЬ ВОПРОСЫ?</h2>
+            <p className="q-desktop-p">Оставьте заявку, мы свяжемся с вами и ответим на них</p>
+          </div>
+          <form onSubmit={handleApplicationSubmit} className="question-form">
+            <div className="form-flex">
+              <div className="inputs">
+                <input
+                  type="text"
+                  name="name"
+                  value={applicationForm.name}
+                  onChange={handleApplicationChange}
+                  placeholder="Ваше имя"
+                  required
+                />
+                <input
+                  type="email"
+                  name="email"
+                  value={applicationForm.email}
+                  onChange={handleApplicationChange}
+                  placeholder="E-mail"
+                  required
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  value={applicationForm.phone}
+                  onChange={handleApplicationChange}
+                  placeholder="Телефон"
+                />
+              </div>
+              <textarea
+                name="question"
+                value={applicationForm.question}
+                onChange={handleApplicationChange}
+                placeholder="Опишите проблему"
+                required
+              ></textarea>
+            </div>
+            <div className="application">
+              <button type="submit">Оставить заявку</button>
+            </div>
           </form>
         </div>
       </section>
 
-      <Footer />
+      {/* Contacts Section */}
+      <section id="contacts" className="contacts" style={{ backgroundImage: `url(${mapBg})` }}>
+        <div className="container">
+          <div className="contacts-block">
+            <h2>Контакты</h2>
+            <ul>
+              <li>Сочи. Россия</li>
+              <li>+7 923 617 56 41</li>
+              <li>Luxury_cars@mail.ru</li>
+            </ul>
+            <img src={socialIcons} alt="Социальные сети" className="social-icons" />
+          </div>
+        </div>
+      </section>
     </>
   );
 };

@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
-import './Catalog.scss';
+import './Catalog.scss'; // Импортируем стили напрямую
+import axios from 'axios';
+
+// Импортируем изображения
+import car1 from '../../assets/img/image-1.png';
+import car2 from '../../assets/img/image-2.png';
+import car3 from '../../assets/img/image-3.png';
+import car4 from '../../assets/img/image-4.png';
+import car5 from '../../assets/img/image-5.png';
+import car6 from '../../assets/img/image-6.png';
 
 const Catalog = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState('all');
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -15,6 +23,15 @@ const Catalog = () => {
         setCars(response.data);
       } catch (error) {
         console.error('Error fetching cars:', error);
+        // Заглушка для демонстрации
+        setCars([
+          { id: 1, model: 'Mercedes CLS 450 4matic', image: car1, price: 'от 12.000 ₽ до 19.000 ₽', category: 'business' },
+          { id: 2, model: 'BMW X5', image: car2, price: 'от 15.000 ₽ до 22.000 ₽', category: 'suv' },
+          { id: 3, model: 'Audi A8', image: car3, price: 'от 14.000 ₽ до 20.000 ₽', category: 'premium' },
+          { id: 4, model: 'Porsche 911', image: car4, price: 'от 25.000 ₽ до 35.000 ₽', category: 'sports' },
+          { id: 5, model: 'Tesla Model S', image: car5, price: 'от 18.000 ₽ до 25.000 ₽', category: 'electric' },
+          { id: 6, model: 'Mercedes S-Class Cabrio', image: car6, price: 'от 20.000 ₽ до 30.000 ₽', category: 'convertible' },
+        ]);
       } finally {
         setLoading(false);
       }
@@ -23,90 +40,71 @@ const Catalog = () => {
     fetchCars();
   }, []);
 
-  // Категории и их условное определение
   const categories = [
-    { 
-      id: 'business', 
-      name: 'Бизнес', 
-      filter: car => car.model.includes('Mercedes') || car.model.includes('BMW') 
-    },
-    { 
-      id: 'suv', 
-      name: 'Внедорожники', 
-      filter: car => car.model.includes('SUV') || car.model.includes('Land Cruiser') 
-    },
-    { 
-      id: 'sports', 
-      name: 'Спорткары', 
-      filter: car => car.model.includes('Porsche') || car.model.includes('Audi TT') 
-    },
-    { 
-      id: 'premium', 
-      name: 'Премиум', 
-      filter: car => car.price.includes('от 20.000') 
-    },
-    { 
-      id: 'convertible', 
-      name: 'Кабриолеты', 
-      filter: car => car.model.includes('Cabrio') || car.model.includes('Roadster') 
-    },
+    { id: 'all', name: 'Все' },
+    { id: 'suv', name: 'Внедорожники' },
+    { id: 'business', name: 'Бизнес' },
+    { id: 'premium', name: 'Премиум' },
+    { id: 'sports', name: 'Спорткары' },
+    { id: 'electric', name: 'Электромобили' },
+    { id: 'convertible', name: 'Кабриолеты' },
+    { id: 'minivan', name: 'Минивэны' }
   ];
 
-  if (loading) return <div className={styles.loading}>Загрузка...</div>;
+  const filteredCars = activeCategory === 'all' 
+    ? cars 
+    : cars.filter(car => car.category === activeCategory);
+
+  if (loading) return <div className="loading">Загрузка...</div>;
+  if (!cars.length) return <div className="not-found">Автомобили не найдены</div>;
 
   return (
     <>
-      <Header />
-      
-      <section className={styles.catalog}>
-        <div className={styles.container}>
-          <h1 className={styles.title}>КАТАЛОГ АВТОМОБИЛЕЙ</h1>
-          
-          <div className={styles.categories}>
-            {categories.map(category => (
-              <a 
-                key={category.id} 
-                href={`#${category.id}`}
-                className={styles.categoryLink}
-              >
-                {category.name}
-              </a>
-            ))}
-          </div>
+      <main className="catalog-page">
+        <section className="categories-section">
+          <div className="container">
+            <h1>КАТЕГОРИИ АВТОМОБИЛЕЙ</h1>
+            
+            <div className="categories-tabs">
+              {categories.map(category => (
+                <button
+                  key={category.id}
+                  className={`category-tab ${activeCategory === category.id ? 'active' : ''}`}
+                  onClick={() => setActiveCategory(category.id)}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
 
-          <div className={styles.carsSection}>
-            {categories.map(category => {
-              const categoryCars = cars.filter(category.filter);
-              if (categoryCars.length === 0) return null;
+            <div className="category-content">
+              <h2>{categories.find(c => c.id === activeCategory)?.name || 'Все автомобили'}</h2>
               
-              return (
-                <div key={category.id} id={category.id} className={styles.categorySection}>
-                  <h2 className={styles.categoryTitle}>{category.name}</h2>
-                  <div className={styles.carList}>
-                    {categoryCars.map(car => (
-                      <div key={car.id} className={styles.carCard}>
-                        <Link to={`/car/${car.id}`} className={styles.carLink}>
-                          <img 
-                            src={`/images/${car.image_url}`} 
-                            alt={car.model}
-                            className={styles.carImage} 
-                          />
-                          <div className={styles.carInfo}>
-                            <h3 className={styles.carModel}>{car.model}</h3>
-                            <p className={styles.carPrice}>{car.price}</p>
-                          </div>
-                        </Link>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+              <div className="cars-grid">
+                {filteredCars.length > 0 ? (
+                  filteredCars.map(car => (
+                    <div key={car.id} className="car-card">
+                      <Link to={`/car/${car.id}`}>
+                        <img 
+                          src={car.image} 
+                          alt={car.model}
+                          className="car-image" 
+                        />
+                        <div className="car-info">
+                          <h3>{car.model}</h3>
+                          <p className="price">{car.price}</p>
+                        </div>
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <p className="no-cars">В этой категории пока нет автомобилей</p>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <Footer />
+        </section>
+      </main>
     </>
   );
 };

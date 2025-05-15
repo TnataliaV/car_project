@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import './Car.scss';
 import axios from 'axios';
 
@@ -75,8 +73,6 @@ const Car = () => {
 
   return (
     <>
-      <Header />
-      
       <section className={styles.carDetails}>
         <div className={styles.container}>
           <h1 className={styles.carTitle}>{car.model}</h1>
@@ -209,8 +205,6 @@ const Car = () => {
           </form>
         </div>
       </section>
-
-      <Footer />
     </>
   );
 };
