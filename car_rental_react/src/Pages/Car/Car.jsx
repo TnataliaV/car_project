@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Car.scss';
-import axios from 'axios';
+import { supabase } from '../../App';
 
 const Car = () => {
   const { id } = useParams();
@@ -14,12 +14,20 @@ const Car = () => {
     start_date: '',
     end_date: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchCarDetails = async () => {
       try {
-        const response = await axios.get(`/api/cars/${id}`);
-        setCar(response.data);
+        const { data, error } = await supabase
+          .from('cars')
+          .select('*')
+          .eq('id', id)
+          .single();
+        
+        if (error) throw error;
+        
+        setCar(data);
       } catch (error) {
         console.error('Error fetching car details:', error);
         navigate('/not-found');
@@ -38,11 +46,23 @@ const Car = () => {
 
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    
     try {
-      await axios.post('/api/bookings', {
-        car_id: id,
-        ...bookingForm
-      });
+      const { data, error } = await supabase
+        .from('booking')
+        .insert([
+          {
+            car_id: id,
+            client_name: bookingForm.name,
+            client_phone: bookingForm.phone,
+            start_date: bookingForm.start_date,
+            end_date: bookingForm.end_date
+          }
+        ]);
+      
+      if (error) throw error;
+      
       alert('Ваше бронирование успешно оформлено!');
       setBookingForm({
         name: '',
@@ -52,7 +72,9 @@ const Car = () => {
       });
     } catch (error) {
       console.error('Error submitting booking:', error);
-      alert('Произошла ошибка при оформлении бронирования');
+      alert('Произошла ошибка при оформлении бронирования: ' + error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -78,7 +100,7 @@ const Car = () => {
           <div className="carContent">
             <div className="carImageContainer">
               <img 
-                src={`/images/${car.image_url}`} 
+                src={car.image_url} 
                 alt={car.model}
                 className="carImage" 
               />
@@ -197,8 +219,12 @@ const Car = () => {
               </div>
             </div>
             
-            <button type="submit" className="submitButton">
-              Подтвердить бронь
+            <button 
+              type="submit" 
+              className="submitButton"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Оформление...' : 'Подтвердить бронь'}
             </button>
           </form>
         </div>

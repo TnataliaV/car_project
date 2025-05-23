@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Main.scss';
-
 import { getCars } from '../../api';
-import axios from 'axios';
+import { supabase } from '../../App';
 
-// Импортируем все изображения заранее
+// Импортируем все изображения
 import heroBg from '../../assets/img/главная_машина.png';
 import car1 from '../../assets/img/image-1.png';
 import car2 from '../../assets/img/image-2.png';
@@ -28,6 +27,7 @@ const Main = () => {
     phone: '',
     question: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchPopularCars = async () => {
@@ -58,8 +58,22 @@ const Main = () => {
 
   const handleApplicationSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    
     try {
-      await axios.post('/api/applications', applicationForm);
+      const { data, error } = await supabase
+        .from('application')
+        .insert([
+          {
+            client_name: applicationForm.name,
+            client_phone: applicationForm.phone,
+            client_email: applicationForm.email,
+            question: applicationForm.question
+          }
+        ]);
+      
+      if (error) throw error;
+      
       alert('Ваш вопрос успешно отправлен!');
       setApplicationForm({
         name: '',
@@ -69,7 +83,9 @@ const Main = () => {
       });
     } catch (error) {
       console.error('Error submitting application:', error);
-      alert('Произошла ошибка при отправке вопроса');
+      alert('Произошла ошибка при отправке вопроса: ' + error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -121,6 +137,7 @@ const Main = () => {
                   <img
                     src={car.image}
                     className="carImage"
+                    alt={`Автомобиль ${car.id}`}
                   />
                 </Link>
               ))
@@ -184,7 +201,6 @@ const Main = () => {
                   value={applicationForm.email}
                   onChange={handleApplicationChange}
                   placeholder="E-mail"
-                  required
                 />
                 <input
                   type="tel"
@@ -192,6 +208,7 @@ const Main = () => {
                   value={applicationForm.phone}
                   onChange={handleApplicationChange}
                   placeholder="Телефон"
+                  required
                 />
               </div>
               <textarea
@@ -203,7 +220,9 @@ const Main = () => {
               ></textarea>
             </div>
             <div className="application">
-              <button type="submit">Оставить заявку</button>
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Отправка...' : 'Оставить заявку'}
+              </button>
             </div>
           </form>
         </div>

@@ -7,8 +7,8 @@ import Car from './Pages/Car/Car';
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = ''
-const supabaseKey = ''
+const supabaseUrl = 'https://yomrwpbquwknwsvsvsgp.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlvbXJ3cGJxdXdrbndzdnN2c2dwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyOTY2OTYsImV4cCI6MjA2Mjg3MjY5Nn0.tRdxMApbShXAZHlVnAcYZfSAYeCXFW-fumgIawi215E'
 
 export const supabase = createClient(supabaseUrl, supabaseKey)
 

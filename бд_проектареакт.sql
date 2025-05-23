@@ -14,7 +14,7 @@ CREATE TABLE booking (
     id SERIAL PRIMARY KEY,
     car_id INTEGER REFERENCES cars(id),
     client_name VARCHAR(100) NOT NULL,
-    client_phone VARCHAR(20) NOT NULL,
+    client_phone VARCHAR(20) NOT NULL UNIQUE,
     start_date TIMESTAMP NOT NULL,
     end_date TIMESTAMP NOT NULL,
     booking_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -23,7 +23,8 @@ CREATE TABLE booking (
 CREATE TABLE application (
     id SERIAL PRIMARY KEY,
     client_name VARCHAR(100) NOT NULL,
-    client_phone INT NOT NULL UNIQUE,
+    client_email VARCHAR(100) not null,
+    client_phone VARCHAR(20) NOT NULL UNIQUE,
     question TEXT NOT NULL,
     sending_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

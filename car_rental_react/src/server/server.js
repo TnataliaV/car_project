@@ -8,11 +8,9 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Database connection
 const pool = new Pool({
   user: process.env.PG_USER,
   host: process.env.PG_HOST,
@@ -22,7 +20,6 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
-// Routes
 app.get('/api/cars', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM car');
@@ -47,35 +44,6 @@ app.get('/api/cars/:id', async (req, res) => {
   }
 });
 
-app.post('/api/bookings', async (req, res) => {
-  try {
-    const { car_id, name, phone, start_date, end_date } = req.body;
-    const result = await pool.query(
-      'INSERT INTO booking (car_id, client_name, client_phone, start_date, end_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [car_id, name, phone, start_date, end_date]
-    );
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error('Error creating booking:', error);
-    res.status(500).send('Ошибка при создании бронирования');
-  }
-});
-
-app.post('/api/applications', async (req, res) => {
-  try {
-    const { name, phone, question } = req.body;
-    const result = await pool.query(
-      'INSERT INTO application (client_name, client_phone, question) VALUES ($1, $2, $3) RETURNING *',
-      [name, phone, question]
-    );
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error('Error creating application:', error);
-    res.status(500).send('Ошибка при создании заявки');
-  }
-});
-
-// Debug logs
 console.log("PG_USER:", process.env.PG_USER);
 console.log("PG_HOST:", process.env.PG_HOST);
 console.log("PG_PORT:", process.env.PG_PORT);
