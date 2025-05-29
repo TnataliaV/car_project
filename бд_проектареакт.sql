@@ -31,4 +31,8 @@ CREATE TABLE application (
 
 INSERT INTO cars VALUES (1, 'Mercedes CLS 450 4matic', 'image-1.png', 3.0, 367, 'полный', 'от 12.000 ₽ до 19.000 ₽');
 
-SELECT * FROM cars;
+INSERT INTO cars VALUES (2, 'BMW X5', 'image-1.png', 4.0, 350, 'полный', 'от 14.000 ₽ до 20.000 ₽', 'premium'),
+(3, 'Audi A8', 'image-1.png', 3.0, 455, 'передний', 'от 25.000 ₽ до 35.000 ₽', 'sports'),
+(4, 'Porsche 911', 'image-1.png', 0, 279, 'полный', 'от 18.000 ₽ до 25.000 ₽', 'electric'),
+(5, 'Tesla Model S', 'image-1.png', 3.0, 343, 'передний', 'от 20.000 ₽ до 30.000 ₽', 'convertible'),
+(6, 'Mercedes S-Class Cabrio', 'image-1.png', 5.0, 320, 'задний', 'от 15.000 ₽ до 22.000 ₽', 'suv');

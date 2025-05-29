@@ -15,7 +15,7 @@ import car6 from '../../assets/img/image-6.png';
 import licenseIcon from '../../assets/img/права.png';
 import experienceIcon from '../../assets/img/стаж.png';
 import docsIcon from '../../assets/img/документы.png';
-import questionBg from '../../assets/img/машина_б.png';
+import questionBg from '../../assets/img/фон3.jpg';
 import mapBg from '../../assets/img/карта.png';
 import socialIcons from '../../assets/img/соц.сети.png';
 

@@ -1,32 +1,7 @@
-/* Основные стили */
-.carPage {
-  background-color: #141414;
-  color: white;
-  min-height: 100vh;
-}
-
-.loading {
-  text-align: center;
-  padding: 100px;
-  font-size: 24px;
-}
-
-.notFound {
-  text-align: center;
-  padding: 100px;
-  color: red;
-  font-size: 24px;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
 /* Секция с деталями автомобиля */
 .carDetails {
-  padding: 60px 0;
+  padding-bottom: 60px;
+  padding-top: 90px;
 }
 
 .carTitle {
@@ -43,13 +18,11 @@
 
 .carImageContainer {
   flex: 1;
-  
+
   .carImage {
     width: 100%;
     max-width: 630px;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -61,14 +34,13 @@
   margin-bottom: 40px;
 
   .specItem {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     font-size: 18px;
     display: flex;
-    
+
     .specLabel {
       font-weight: bold;
-      min-width: 120px;
-      display: inline-block;
+      margin-right: 10px;
     }
   }
 }
@@ -80,67 +52,141 @@
 
   a {
     padding: 12px 30px;
-    border-radius: 4px;
     text-decoration: none;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
     transition: all 0.3s ease;
-    
-    &.primaryButton {
+    border: 1px solid #ffffff;
+    color: #ffffff;
+
+    &:hover {
       background-color: #ffffff;
       color: #141414;
-      
-      &:hover {
-        background-color: #e0e0e0;
-      }
-    }
-    
-    &.secondaryButton {
-      border: 1px solid #ffffff;
-      color: #ffffff;
-      
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
     }
   }
 }
 
 /* Секция с тарифами */
 .pricing {
-  padding: 60px 0;
-  background-color: #1e1e1e;
+  padding-top: 40px;
+  padding-bottom: 90px;
 
   .sectionTitle {
     text-align: center;
-    margin-bottom: 40px;
     font-size: 28px;
-    font-family: 'Inter', sans-serif;
+    margin-bottom: 30px;
+    color: #ffffff;
+    font-weight: bold;
   }
 }
 
 .pricingTable {
   overflow-x: auto;
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 .ratesTable {
   width: 100%;
   border-collapse: collapse;
-  font-family: 'Inter', sans-serif;
+  margin: 0 auto;
+  background-color: #2B2D32;
+  border: 1px solid #ffffff;
 
+  
   .tableHeader {
     padding: 15px;
-    text-align: left;
-    background-color: #2a2a2a;
-    font-weight: 600;
+    text-align: center;
+    font-weight: bold;
+
+    &:first-child {
+      border-right: 1px solid #ffffff; /* Белая линия между заголовками */
+    }
   }
 
   .tableRow {
-    &:nth-child(even) {
-      background-color: #252525;
+    border: 1px solid #ffffff;
+  }
+
+  .tableCell {
+    padding: 15px;
+    text-align: center;
+    color: #ffffff;
+
+    &:first-child {
+      border-right: 1px solid #ffffff; /* Белая линия между заголовками */
     }
-    
+  }
+}
+
+/* Секция бронирования */
+#booking {
+  background-image: url('../../assets/img/фон3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+}
+
+.bookingForm {
+  padding: 40px 0;
+
+  .sectionTitle {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  form {
+    width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+  }
+
+  .formGroup {
+    margin-bottom: 20px;
+  }
+
+  .formRow {
+    display: flex;
+    gap: 20px;
+
+    .formInput {
+      width: 260px;
+
+    }
+  }
+
+  .formLabel {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #a1a1a1;
+  }
+
+  .formInput {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    transition: border 0.2s;
+  }
+
+  .submitButton {
+    width: 100%;
+    padding: 15px 30px;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    background: none;
+    border-radius: 1px;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
     &:hover {
-      background-color: #2e2e2e;
+      background-color: #ffffff;
+      color: #141414;
     }
-  }}
+  }
+}
