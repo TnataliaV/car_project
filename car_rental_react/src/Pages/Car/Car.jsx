@@ -7,6 +7,7 @@ const Car = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [car, setCar] = useState(null);
+  const [rentalRates, setRentalRates] = useState(null);
   const [loading, setLoading] = useState(true);
   const [bookingForm, setBookingForm] = useState({
     name: '',
@@ -17,26 +18,37 @@ const Car = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    const fetchCarDetails = async () => {
+    const fetchCarData = async () => {
       try {
-        const { data, error } = await supabase
+        // Получаем данные об автомобиле
+        const { data: carData, error: carError } = await supabase
           .from('cars')
           .select('*')
           .eq('id', id)
           .single();
         
-        if (error) throw error;
+        if (carError) throw carError;
         
-        setCar(data);
+        // Получаем тарифы для этого автомобиля
+        const { data: ratesData, error: ratesError } = await supabase
+          .from('rental_rates')
+          .select('*')
+          .eq('car_id', id)
+          .single();
+        
+        if (ratesError) throw ratesError;
+        
+        setCar(carData);
+        setRentalRates(ratesData);
       } catch (error) {
-        console.error('Error fetching car details:', error);
+        console.error('Error fetching data:', error);
         navigate('/not-found');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCarDetails();
+    fetchCarData();
   }, [id, navigate]);
 
   const handleBookingChange = (e) => {
@@ -78,15 +90,20 @@ const Car = () => {
     }
   };
 
-  const rentalRates = [
-    { name: '1 час', price: '14.000 ₽' },
-    { name: '3 часа', price: '16.000 ₽' },
-    { name: 'Пол дня', price: '19.000 ₽' },
-    { name: '1 сутки', price: '17.000 ₽' },
-    { name: 'С водителем', price: '+3.000 ₽' },
-    { name: 'Для свадьбы', price: '18.000 ₽' },
-    { name: 'Для фотосессии', price: '12.000 ₽' }
-  ];
+  // Формируем массив тарифов из данных БД
+  const getRentalRates = () => {
+    if (!rentalRates) return [];
+    
+    return [
+      { name: '1 час', price: rentalRates.price_1hour },
+      { name: '3 часа', price: rentalRates.price_3hour },
+      { name: 'Пол дня', price: rentalRates.price_halfday },
+      { name: '1 сутки', price: rentalRates.price_1day },
+      { name: 'С водителем', price: rentalRates.price_with_driver },
+      { name: 'Для свадьбы', price: rentalRates.price_for_wedding },
+      { name: 'Для фотосессии', price: rentalRates.price_photoshoots }
+    ];
+  };
 
   if (loading) return <div className="loading">Загрузка...</div>;
   if (!car) return <div className="notFound">Автомобиль не найден</div>;
@@ -152,7 +169,7 @@ const Car = () => {
                 </tr>
               </thead>
               <tbody>
-                {rentalRates.map((rate, index) => (
+                {getRentalRates().map((rate, index) => (
                   <tr key={index} className="tableRow">
                     <td className="tableCell">{rate.name}</td>
                     <td className="tableCell">{rate.price}</td>

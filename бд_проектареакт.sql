@@ -36,3 +36,23 @@ INSERT INTO cars VALUES (2, 'BMW X5', 'image-1.png', 4.0, 350, 'полный', '
 (4, 'Porsche 911', 'image-1.png', 0, 279, 'полный', 'от 18.000 ₽ до 25.000 ₽', 'electric'),
 (5, 'Tesla Model S', 'image-1.png', 3.0, 343, 'передний', 'от 20.000 ₽ до 30.000 ₽', 'convertible'),
 (6, 'Mercedes S-Class Cabrio', 'image-1.png', 5.0, 320, 'задний', 'от 15.000 ₽ до 22.000 ₽', 'suv');
+
+
+CREATE TABLE rental_rates (
+  id SERIAL PRIMARY KEY,
+  car_id INTEGER REFERENCES cars(id),
+  price_1hour VARCHAR(50) NOT NULL,
+  price_3hour VARCHAR(50) NOT NULL,
+  price_halfday VARCHAR(50) NOT NULL,
+  price_1day VARCHAR(50) NOT NULL,
+  price_with_driver VARCHAR(50) NOT NULL,
+  price_for_wedding VARCHAR(50) NOT NULL,
+  price_photoshoots VARCHAR(50) NOT NULL,
+);
+
+INSERT INTO rental_rates VALUES (1, 1, '14.000 ₽', '16.000 ₽', '19.000 ₽', '17.000 ₽', '+3.000 ₽', '18.000 ₽', '12.000 ₽'),
+(2, 2, '15.000 ₽', '17.000 ₽', '20.000 ₽', '18.000 ₽', '+3.500 ₽', '19.000 ₽', '13.000 ₽'),
+(3, 3, '18.000 ₽', '20.000 ₽', '23.000 ₽', '21.000 ₽', '+4.000 ₽', '22.000 ₽', '15.000 ₽'),
+(4, 4, '22.000 ₽', '24.000 ₽', '27.000 ₽', '25.000 ₽', '+5.000 ₽', '26.000 ₽', '18.000 ₽'),
+(5, 5, '16.000 ₽', '18.000 ₽', '21.000 ₽', '19.000 ₽', '+4.000 ₽', '20.000 ₽', '14.000 ₽'),
+(6, 6, '17.000 ₽', '19.000 ₽', '22.000 ₽', '20.000 ₽', '+4.500 ₽', '21.000 ₽', '15.000 ₽');
